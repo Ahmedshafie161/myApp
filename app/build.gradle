@@ -61,6 +61,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database'
     //firebase analytics
     implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
 
 }
 // firebase
