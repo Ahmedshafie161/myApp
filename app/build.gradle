@@ -55,9 +55,13 @@ dependencies {
 
     //retrofit adapter call 2 observe
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    // firebase
+    // firebase platform
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
+    //firebase database realtime
+    implementation 'com.google.firebase:firebase-database'
+    //firebase analytics
     implementation 'com.google.firebase:firebase-analytics'
+
 }
 // firebase
 apply plugin: 'com.android.application'
