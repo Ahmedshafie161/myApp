@@ -29,13 +29,13 @@ public class PostViewModel extends ViewModel {
 
     public void getPosts() {
         //Rx java observable
-        Observable observable = (Observable) PostsClient.getINSTANCE().getPosts()
+        Observable observable =  PostsClient.getINSTANCE().getPosts()
                 // make upstream (getting data) in io cashed thread
                 .subscribeOn(Schedulers.io())
                 //make downstream in ui thread
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread());
         //RxJava expressions ,when recieve data assign it to LiveData
-                .subscribe(o -> postsMutableLiveData.setValue((List<PostModel>) o),e -> Log.d(TAG, "getPosts: "+e));
+               observable .subscribe(o -> postsMutableLiveData.setValue((List<PostModel>) o),e -> Log.d(TAG, "getPosts: "+e));
         /*
         Observer<List<PostModel>> observer = new Observer<List<PostModel>>() {
             @Override
