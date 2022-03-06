@@ -35,7 +35,7 @@ public class PostViewModel extends ViewModel {
                 //make downstream in ui thread
                 .observeOn(AndroidSchedulers.mainThread());
         //RxJava expressions ,when recieve data assign it to LiveData
-               observable .subscribe(o -> postsMutableLiveData.setValue((List<PostModel>) o),e -> Log.d(TAG, "getPosts: "+e));
+               observable.subscribe(o -> postsMutableLiveData.setValue((List<PostModel>) o),e -> Log.d(TAG, "getPosts: "+e));
         /*
         Observer<List<PostModel>> observer = new Observer<List<PostModel>>() {
             @Override
