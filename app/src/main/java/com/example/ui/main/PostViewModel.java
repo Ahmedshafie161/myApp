@@ -2,12 +2,14 @@ package com.example.ui.main;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.data.MyDatabase;
 import com.example.data.PostsClient;
 import com.example.pojo.PostModel;
 
@@ -27,6 +29,7 @@ public class PostViewModel extends ViewModel {
     MutableLiveData<List<PostModel>> postsMutableLiveData = new MutableLiveData<>();
     MutableLiveData<String> posts = new MutableLiveData<>();
 
+    // Retrofit Recieve Data
     public void getPosts() {
         //Rx java observable
         Observable observable =  PostsClient.getINSTANCE().getPosts()
@@ -74,5 +77,13 @@ public class PostViewModel extends ViewModel {
         });
     }*/
     }
+
+    //DataBase write Data
+    public void addToDatabase(Context context, String key, String value){
+        MyDatabase myDatabase= new MyDatabase();
+        myDatabase.initMyDatabase();
+        myDatabase.addToDatabase(context,key,value);
+    }
+
 }
 

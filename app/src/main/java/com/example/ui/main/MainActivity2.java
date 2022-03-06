@@ -75,12 +75,12 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
         for (int i =0; i<50 ; i++){
             al.add(new MyAggregateData("ahmed",1,10));
         }
-        MyDatabase myDatabase= new MyDatabase();
-        myDatabase.addToDatabase(this,"ali","kareem");
+
 
         //MVVM implemntation
         postViewModel = ViewModelProviders.of(this).get(PostViewModel.class);
         postViewModel.getPosts();
+        postViewModel.addToDatabase(this ,"ak","ko");
 
         //recycler adapter + listener
         myRecyclerAdapter = new MyRecyclerAdapter(al, new onItemClickListener() {
