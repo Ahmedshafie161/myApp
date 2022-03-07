@@ -15,6 +15,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class MyDatabase {
@@ -30,8 +33,14 @@ public class MyDatabase {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                // Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                PostModel postModel =  dataSnapshot.getValue(PostModel.class);
-                Log.d(TAG, "Value is: " + postModel.getTitle());
+                //PostModel postModel =  dataSnapshot.getValue(PostModel.class);
+                List<PostModel> postModelList= new LinkedList<PostModel>();
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    postModelList.add(postSnapshot.getValue(PostModel.class));
+                }
+                Log.i(TAG, "list value is "+String.valueOf(postModelList));
+                Log.i(TAG, "first element value is "+String.valueOf(postModelList.get(0).getTitle()));
+                //Log.d("hay", "Value is: "+postModel.getTitle() );
                 //Log.d(TAG, "Value is: " + map);
             }
 
@@ -52,7 +61,7 @@ public class MyDatabase {
 
 
          //myRef.child(key).setValue(postModel)
-        myRef.setValue(postModel)
+        myRef.push().setValue(postModel)
                 .addOnSuccessListener((Activity) context, unused -> Log.d("FirebaseData","user data uploaded successfully"))
                 .addOnFailureListener((Activity) context, e -> Log.d("FirebaseData","user data upload failed"));
 

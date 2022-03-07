@@ -81,7 +81,7 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
         postViewModel = ViewModelProviders.of(this).get(PostViewModel.class);
         postViewModel.getPosts();
 
-        postViewModel.addToDatabase(this ,"ak","new key");
+        postViewModel.addToDatabase(this ,"akxx","asnew key");
 
         //recycler adapter + listener
         myRecyclerAdapter = new MyRecyclerAdapter(al, new onItemClickListener() {
