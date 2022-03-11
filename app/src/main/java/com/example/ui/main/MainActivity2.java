@@ -38,8 +38,10 @@ import com.example.onItemClickListener;
 import com.example.pojo.MyAggregateData;
 import com.example.pojo.PostModel;
 import com.example.ui.AddDataActivity;
+import com.example.ui.sign.SignIn;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -53,6 +55,11 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
     MyHandler myHandler;
     MyRecyclerAdapter myRecyclerAdapter;
     MyAggregateData arrayAggr;
+
+
+    /* Data from the authenticated user */
+
+
     private static final String CHANNEL_ID = "simplified_coding";
     private static final String CHANNEL_NAME = "simplified_coding";
     private static final String CHANNEL_DESC = "simplified_coding Notification";
@@ -79,9 +86,10 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
 
         //MVVM implemntation
         postViewModel = ViewModelProviders.of(this).get(PostViewModel.class);
+        // retrofit
         postViewModel.getPosts();
-
-        postViewModel.addToDatabase(this ,"akxx","asnew key");
+        // firebase
+        //postViewModel.addToDatabase(this ,);
 
         //recycler adapter + listener
         myRecyclerAdapter = new MyRecyclerAdapter(al, new onItemClickListener() {
@@ -253,6 +261,16 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
         });
     }
         //Recieving data from FRAGMENT
+
+
+    @Override
+    protected void onStart() {
+       super.onStart();
+        /* if(mAuth.getCurrentUser()==null){
+            startActivity(new Intent(this, SignIn.class));
+        } */
+    }
+
     @Override
     public void onFragmentInteraction(int x) {
         Toast.makeText(this, String.valueOf(x)+"This is it", Toast.LENGTH_SHORT).show();
