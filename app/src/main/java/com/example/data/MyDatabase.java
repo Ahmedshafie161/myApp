@@ -2,17 +2,12 @@ package com.example.data;
 
 import static android.content.ContentValues.TAG;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.health.PackageHealthStats;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.example.pojo.PostModel;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,13 +16,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class MyDatabase {
-    FirebaseAuth firebaseAuth ;
     DatabaseReference databaseReference;
-
+    String userId  ;
+    public Boolean isSigned=true;
 
     //initialize database, get reference ,register listener read data changes
     /* list of pojo
@@ -56,18 +48,21 @@ public class MyDatabase {
             }
         });
     }*/
-    public void initDatabase (String fbUid){
+    public void initDatabase (){
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://myapp-8124e-default-rtdb.europe-west1.firebasedatabase.app");
+        userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         // get root object of firebase database
-        this.databaseReference = database.getReference().child(fbUid);
+        this.databaseReference = database.getReference().child(userId);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                PostModel postModel =  dataSnapshot.getValue(PostModel.class);
+                    PostModel postModel =  dataSnapshot.getValue(PostModel.class);
+                    Log.d(TAG, "Data Changed: "+postModel);
 
-                /*List<PostModel> postModelList= new LinkedList<PostModel>();
+            /*List<PostModel> postModelList= new LinkedList<PostModel>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     postModelList.add(postSnapshot.getValue(PostModel.class));
                 }
@@ -79,35 +74,66 @@ public class MyDatabase {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.w(TAG, "Failed to read value.", error.toException());
+                Log.d("TAG", "Failed to read value.", error.toException());
 
             }
         });
     }
 
-    public void initMyDatabaseAuth (String email, String password,Context context, PostModel postModel){
-        firebaseAuth =FirebaseAuth.getInstance();
+    public void signUpAuth(String email, String password,  PostModel postModel){
+        FirebaseAuth firebaseAuth =FirebaseAuth.getInstance();
+        //create auth , if success add pojo to database
         firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 //firebaseUser=task.getResult().getUser();
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                initDatabase(firebaseUser.getUid());
-                addToDatabase(context ,postModel);
+                //userId =firebaseUser.getUid();
+                addToDatabase(postModel);
             }
         });
     }
 
     // Write a message to the database
 
-
-    public void addToDatabase(Context context, PostModel postModel) {
+    public  void addFromActivity (PostModel postModel){
+        initDatabase();
+        databaseReference.push().setValue(postModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("TAG", "valued added from activity Succeeded");
+                    }
+                });
+    }
+    public void addToDatabase(PostModel postModel) {
 
         //String key =myRef.push().getKey();
          //myRef.child(key).setValue(postModel)
         //databaseReference.push().setValue(postModel)
-        databaseReference.setValue(postModel)
-                .addOnSuccessListener((Activity) context, unused -> Log.d("TAG","user data uploaded successfully"))
-                .addOnFailureListener((Activity) context, e -> Log.d("TAG","user data upload failed"));
 
+        initDatabase();
+        databaseReference.setValue(postModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("TAG", "valued added Succeeded");
+                    }
+                });
+
+    }
+    public boolean signIn(String email , String password){
+        FirebaseAuth firebaseAuth= firebaseAuth =FirebaseAuth.getInstance();
+        firebaseAuth.signInWithEmailAndPassword(email,password)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()){
+                            Log.d("TAG", "loging Succeeded");
+                            isSigned = true ;
+                        }else {
+                            Log.e("TAG", "login Failed", task.getException());
+                            isSigned = false ;
+
+                        }
+                    });
+    return isSigned ;
     }
 }

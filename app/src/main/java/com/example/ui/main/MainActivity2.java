@@ -89,7 +89,8 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
         // retrofit
         postViewModel.getPosts();
         // firebase
-        //postViewModel.addToDatabase(this ,);
+        postViewModel.addToDatabase(new PostModel(3,"main2","main1"));
+        Log.d("TAG", "value added froma activity");
 
         //recycler adapter + listener
         myRecyclerAdapter = new MyRecyclerAdapter(al, new onItemClickListener() {

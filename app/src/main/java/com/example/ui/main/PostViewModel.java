@@ -79,10 +79,9 @@ public class PostViewModel extends ViewModel {
     }
 
     //DataBase write Data
-    public void addToDatabase(Context context,PostModel postModel){
+    public void addToDatabase(PostModel postModel){
         MyDatabase myDatabase= new MyDatabase();
-        myDatabase.initDatabase("User");
-        myDatabase.addToDatabase( context,postModel );
+        myDatabase.addFromActivity(postModel );
 
     }
 
