@@ -5,15 +5,22 @@
       <map>
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_add_data.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_home.xml" value="0.1766304347826087" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_main2.xml" value="0.12310030395136778" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_mainfb.xml" value="0.1" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_mainn.xml" value="0.1" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
-        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_sign_up.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/activity_sign_up.xml" value="0.1" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/content_home.xml" value="0.19519927536231885" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_blank.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_blank2.xml" value="0.22554347826086957" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_blank3.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_first.xml" value="0.19519927536231885" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_log_in.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_register.xml" value="0.1766304347826087" />
+        <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/fragment_second.xml" value="0.19519927536231885" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/listview_layout.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/layout/post_item.xml" value="0.1" />
         <entry key="..\:/Users/Ahmed/AndroidStudioProjects/MyApplication4/app/src/main/res/menu/menu_main.xml" value="0.13020833333333334" />

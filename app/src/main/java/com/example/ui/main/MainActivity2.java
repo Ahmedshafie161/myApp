@@ -9,7 +9,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,27 +25,18 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.BlankFragment;
 import com.example.BlankFragment2;
 import com.example.R;
-import com.example.data.MyDatabase;
-import com.example.onItemClickListener;
+import com.example.RecyclerItemListener;
 import com.example.pojo.MyAggregateData;
 import com.example.pojo.PostModel;
 import com.example.ui.AddDataActivity;
-import com.example.ui.sign.SignIn;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity2 extends AppCompatActivity implements BlankFragment2.MyFragmentListener {
 
@@ -55,17 +45,12 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
     MyHandler myHandler;
     MyRecyclerAdapter myRecyclerAdapter;
     MyAggregateData arrayAggr;
-
-
     /* Data from the authenticated user */
-
-
     private static final String CHANNEL_ID = "simplified_coding";
     private static final String CHANNEL_NAME = "simplified_coding";
     private static final String CHANNEL_DESC = "simplified_coding Notification";
     PostViewModel postViewModel ;
     private PostModel postModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +61,6 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
         btnLoop = findViewById(R.id.btn_loop);
         Button btnFrag1 = findViewById(R.id.button4);
         Button btnFrag2 = findViewById(R.id.button5);
-
         //arraylist data
         ArrayList<MyAggregateData>  al= new ArrayList<>();
         for (int i =0; i<50 ; i++){
@@ -93,7 +77,7 @@ public class MainActivity2 extends AppCompatActivity implements BlankFragment2.M
         Log.d("TAG", "value added froma activity");
 
         //recycler adapter + listener
-        myRecyclerAdapter = new MyRecyclerAdapter(al, new onItemClickListener() {
+        myRecyclerAdapter = new MyRecyclerAdapter(al, new RecyclerItemListener() {
             @Override
             public void onItemClick(MyAggregateData arrayAggr) {
                 MainActivity2.this.arrayAggr =arrayAggr;

@@ -2,9 +2,11 @@ package com.example.data;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.pojo.PostModel;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -18,8 +20,36 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MyDatabase {
     DatabaseReference databaseReference;
-    String userId  ;
     public Boolean isSigned=true;
+    private Application application;
+
+    private FirebaseAuth firebaseAuth;
+    private MutableLiveData<FirebaseUser> userLiveData;
+    private MutableLiveData<Boolean> loggedOutLiveData;
+    public MyDatabase(){
+
+        this.application = application;
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        this.userLiveData = new MutableLiveData<>();
+        this.loggedOutLiveData = new MutableLiveData<>();
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            userLiveData.postValue(firebaseAuth.getCurrentUser());
+        }
+
+    }
+    public MyDatabase(Application application) {
+        this.application = application;
+        this.firebaseAuth = FirebaseAuth.getInstance();
+        this.userLiveData = new MutableLiveData<>();
+        this.loggedOutLiveData = new MutableLiveData<>();
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            userLiveData.postValue(firebaseAuth.getCurrentUser());
+            loggedOutLiveData.postValue(false);
+        }
+    }
+
 
     //initialize database, get reference ,register listener read data changes
     /* list of pojo
@@ -48,19 +78,26 @@ public class MyDatabase {
             }
         });
     }*/
+
     public void initDatabase (){
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://myapp-8124e-default-rtdb.europe-west1.firebasedatabase.app");
-        userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         // get root object of firebase database
         this.databaseReference = database.getReference().child(userId);
 
+    }
+    public void getData(){
+        // if initl not called , call it , recieve data with listener
+        if (databaseReference==null){
+            initDatabase();
+        }
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    PostModel postModel =  dataSnapshot.getValue(PostModel.class);
-                    Log.d(TAG, "Data Changed: "+postModel);
+                PostModel postModel =  dataSnapshot.getValue(PostModel.class);
+                Log.d(TAG, "Data Changed: "+postModel);
 
             /*List<PostModel> postModelList= new LinkedList<PostModel>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
@@ -78,6 +115,7 @@ public class MyDatabase {
 
             }
         });
+
     }
 
     public void signUpAuth(String email, String password,  PostModel postModel){
@@ -89,6 +127,8 @@ public class MyDatabase {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 //userId =firebaseUser.getUid();
                 addToDatabase(postModel);
+                userLiveData.postValue(firebaseAuth.getCurrentUser());
+
             }
         });
     }
@@ -106,12 +146,12 @@ public class MyDatabase {
                 });
     }
     public void addToDatabase(PostModel postModel) {
-
         //String key =myRef.push().getKey();
          //myRef.child(key).setValue(postModel)
         //databaseReference.push().setValue(postModel)
-
-        initDatabase();
+        if (databaseReference==null){
+            initDatabase();
+        }
         databaseReference.setValue(postModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -121,19 +161,31 @@ public class MyDatabase {
                 });
 
     }
-    public boolean signIn(String email , String password){
-        FirebaseAuth firebaseAuth= firebaseAuth =FirebaseAuth.getInstance();
+    public void signIn(String email , String password){
+        FirebaseAuth firebaseAuth =FirebaseAuth.getInstance();
         firebaseAuth.signInWithEmailAndPassword(email,password)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()){
+                            userLiveData.postValue(firebaseAuth.getCurrentUser());
                             Log.d("TAG", "loging Succeeded");
-                            isSigned = true ;
                         }else {
                             Log.e("TAG", "login Failed", task.getException());
-                            isSigned = false ;
 
                         }
                     });
-    return isSigned ;
     }
+    public void signOut(){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth.signOut();
+        loggedOutLiveData.postValue(true);
+
+
+    }
+    public MutableLiveData<Boolean> getUserLoggedMutableLiveData() {
+        return loggedOutLiveData;
+    }public  MutableLiveData<FirebaseUser> getFirebaseUserMutableLiveData() {
+        return userLiveData ;
+    }
+
+
 }

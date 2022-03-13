@@ -10,34 +10,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light"
+        android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.sign.SignIn"
-            android:exported="true" >
+            android:name=".ui.main.MainActivity2"
+            android:exported="true"
+            android:label="@string/app_name" />
+        <activity android:name=".ui.AddDataActivity" />
+        <activity
+            android:name=".ui.sign.HomeActivity"
+            android:exported="true"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-        <activity
-            android:name=".ui.sign.SignUp"
-            android:exported="true">
-
-
         </activity>
 
-        <activity
-            android:name=".ui.main.MainActivity2"
-            android:exported="true"
-            android:label="@string/app_name">
-
-            
-        </activity>
-
-        <activity android:name=".ui.AddDataActivity" />
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@ import android.content.Context;
         import androidx.annotation.NonNull;
         import androidx.recyclerview.widget.RecyclerView;
         import com.example.R;
-        import com.example.onItemClickListener;
+        import com.example.RecyclerItemListener;
         import com.example.pojo.MyAggregateData;
         import com.example.pojo.PostModel;
         import java.util.ArrayList;
@@ -16,10 +16,10 @@ import android.content.Context;
 public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.MyViewHolder> {
     ArrayList<MyAggregateData> arrayAggrList ;
     List<PostModel> postModelList = new ArrayList<>();
-    onItemClickListener listener ;
+    RecyclerItemListener listener ;
     Context context;
     // intilizing recycler with arraylist data , context and listener to send data back to activity
-    public MyRecyclerAdapter(ArrayList<MyAggregateData> arrayAggrList, onItemClickListener listener) {
+    public MyRecyclerAdapter(ArrayList<MyAggregateData> arrayAggrList, RecyclerItemListener listener) {
         this.arrayAggrList = arrayAggrList;
         this.context = context;
         this.listener=listener;
